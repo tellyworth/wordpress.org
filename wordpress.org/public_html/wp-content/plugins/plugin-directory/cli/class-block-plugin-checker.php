@@ -23,6 +23,7 @@ class Block_Plugin_Checker {
 	protected $readme = null;
 	protected $headers = null;
 	protected $blocks = null;
+	protected $block_json_files = null;
 
 	/**
 	 * Constructor.
@@ -84,6 +85,7 @@ class Block_Plugin_Checker {
 				$potential_block_directories[] = dirname( $relative_filename );
 				foreach ( $blocks_in_file as $block ) {
 					$blocks[ $block->name ] = $block;
+					$this->block_json_files[ $block->name ] = $filename;
 				}
 			}
 		} else {
@@ -204,6 +206,9 @@ class Block_Plugin_Checker {
 
 	}
 
+	/**
+	 * There should be at least one block.
+	 */
 	function check_for_blocks() {
 		if ( 0 === count( $this->blocks ) ) {
 			$this->record_result( __FUNCTION__,
@@ -220,21 +225,68 @@ class Block_Plugin_Checker {
 	}
 
 	/**
-	 * Do the blocks all have available script assets, either discoverable or in the block.json file?
+	 * Every block should have a block.json file, ideally.
 	 */
-	function check_for_block_scripts() {
-		foreach ( $this->find_block_scripts() as $block_name => $scripts ) {
-			if ( empty( $scripts ) || count( $scripts ) < 1 ) {
+	function check_for_block_json() {
+		foreach ( $this->blocks as $block_name => $block_info ) {
+			if ( !empty( $this->block_json_files[ $block_name ] ) ) {
 				$this->record_result( __FUNCTION__,
-					'problem',
-					sprintf( __( 'No scripts found for block %s' ), $block_name )
+					'info',
+					sprintf( __( 'block.json file exists for block %s' ), $block_name ),
+					$this->block_json_files[ $block_name ]
 				);
 			} else {
 				$this->record_result( __FUNCTION__,
+					'problem',
+					sprintf( __( 'Missing block.json file for block %s' ), $block_name ),
+					$block_name
+				);
+			}
+		}
+	}
+
+	/**
+	 * Do the blocks all have available script assets, either discoverable or in the block.json file?
+	 */
+	function check_for_block_scripts() {
+		$block_scripts = $this->find_block_scripts();
+
+		foreach ( $this->blocks as $block_name => $block_info ) {
+			if ( !empty( $block_scripts[ $block_name ] ) ) {
+				$this->record_result( __FUNCTION__,
 					'info',
 					sprintf( __( 'Scripts found for block %s' ), $block_name ),
-					$scripts
+					$block_scripts[ $block_name ]
 				);
+			} else {
+				$this->record_result( __FUNCTION__,
+					'problem',
+					sprintf( __( 'No scripts found for block %s' ), $block_name ),
+					$block_name
+				);
+			}
+		}
+	}
+
+	/**
+	 * Do the script files all exist?
+	 */
+	function check_for_block_script_files() {
+		foreach ( $this->find_block_scripts() as $block_name => $scripts ) {
+			foreach ( $scripts as $script ) {
+				if ( file_exists( $this->path_to_plugin . $script ) ) {
+					$this->record_result( __FUNCTION__,
+						'info',
+						sprintf( __( 'Script file exists for block %s' ), $block_name ),
+						$script
+					);
+				} else {
+					$this->record_result( __FUNCTION__,
+						'problem',
+						sprintf( __( 'Missing script file for block %s' ), $block_name ),
+						$script
+					);
+				}
 			}
 		}
 	}
