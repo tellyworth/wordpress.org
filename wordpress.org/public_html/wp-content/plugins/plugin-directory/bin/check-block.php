@@ -47,8 +47,7 @@ function fetch_plugin( $slug, $stable_tag = null ) {
 		$subdir = '/trunk';
 
 	$cmd = "svn export " . escapeshellarg( "https://plugins.svn.wordpress.org/" . $slug . $subdir ) . " " . escapeshellarg( $path );
-	printf( "%s\n", $cmd );
-	printf( "%s\n", shell_exec( $cmd ) );
+	shell_exec( $cmd );
 
 	return $path;
 }
@@ -63,7 +62,7 @@ if ( !empty( $opts['slug'] ) ) {
 			array(
 				'taxonomy' => 'plugin_section',
 				'field'    => 'slug',
-				'terms'    => 'blocks',
+				'terms'    => 'block',
 			),
 		),
 	);
@@ -77,7 +76,7 @@ if ( !empty( $opts['slug'] ) ) {
 			array(
 				'taxonomy' => 'plugin_section',
 				'field'    => 'slug',
-				'terms'    => 'blocks',
+				'terms'    => 'block',
 			),
 		),
 	);
