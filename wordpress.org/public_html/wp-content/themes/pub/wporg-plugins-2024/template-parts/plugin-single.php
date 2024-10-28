@@ -19,7 +19,7 @@ $is_closed = in_array( get_post_status(), [ 'closed', 'disabled' ], true );
 
 $plugin_title = $is_closed ? $post->post_name : get_the_title();
 
-$show_release_beta = isset( $_GET['show_release_beta'] );
+$show_release_beta = isset( $_GET['show_release_beta'] ) || ( defined( 'WPORG_SANDBOXED' ) && WPORG_SANDBOXED );
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'alignwide' ); ?>>
