@@ -6,6 +6,11 @@ if ( 'cli' !== php_sapi_name() ) {
 	return;
 }
 
+// load WordPress if we're running within wp-now.
+if ( false !== strpos( $_SERVER['_'], '@wp-now/wp-now' ) ) {
+	require_once '/var/www/html/wp-load.php';
+}
+
 /**
  * Manually load the plugin being tested.
  */
