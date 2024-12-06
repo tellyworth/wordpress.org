@@ -227,10 +227,10 @@ class Tests_Plugins_API extends TestCase {
 		$plugins = plugins_api( 'hot_tags', array( 'number' => $number ) );
 
 		$this->assertEquals( $number, count( $plugins ) );
-		$this->assertInternalType( 'array', $plugins, 'Response array is array' );
+		$this->assertIsArray( $plugins );
 
 		foreach ( $plugins as $hot_tag => $tag_array ) {
-			$this->assertInternalType( 'array', $tag_array, 'Tag array is array' );
+			$this->assertIsArray( $tag_array );
 			$this->assertArrayHasKey( 'name', $tag_array, 'Name exists' );
 			$this->assertArrayHasKey( 'slug', $tag_array, 'Slug exists' );
 			$this->assertArrayHasKey( 'count', $tag_array, 'Count exists' );
@@ -252,7 +252,7 @@ class Tests_Plugins_API extends TestCase {
 
 		// Plugins.
 		$this->assertObjectHasAttribute( 'plugins', $plugin_query, 'Plugins exists' );
-		$this->assertAttributeInternalType( 'array', 'plugins', $plugin_query, 'Plugins should be an array' );
+		$this->assertIsArray( $plugin_query->plugins );
 
 		$this->greaterThanOrEqual( count( $plugin_query->plugins ), $per_page );
 
@@ -266,20 +266,20 @@ class Tests_Plugins_API extends TestCase {
 		$this->assertObjectHasAttribute( 'author', $plugin_info, 'Author exists' );
 		$this->assertObjectHasAttribute( 'author_profile', $plugin_info, 'Author Profile exists' );
 		$this->assertObjectHasAttribute( 'contributors', $plugin_info, 'Contributors exists' );
-		$this->assertAttributeInternalType( 'array', 'contributors', $plugin_info, 'Contributors should be an array' );
+		$this->assertIsArray( $plugin_info->contributors );
 		$this->assertObjectHasAttribute( 'requires', $plugin_info, 'Requires exists' );
 		if ( $this->require_tested_value || isset( $plugin_info->tested ) ) {
 			$this->assertObjectHasAttribute( 'tested', $plugin_info, 'Tested exists' );
-			$this->assertAttributeInternalType( 'string', 'tested', $plugin_info, 'Tested should be a string' );
+			$this->assertIsString( $plugin_info->tested, 'Tested should be a string' );
 		}
 		$this->assertObjectHasAttribute( 'requires_php', $plugin_info, 'Requires PHP exists' );
 		$this->assertObjectHasAttribute( 'compatibility', $plugin_info, 'Compatibility exists' );
-		$this->assertAttributeInternalType( 'array', 'compatibility', $plugin_info, 'Compatibility should be an array' );
+		$this->assertIsArray( $plugin_info->compatibility );
 
 		// Ratings.
 		$this->assertObjectHasAttribute( 'rating', $plugin_info, 'Rating exists' );
 		$this->assertObjectHasAttribute( 'ratings', $plugin_info, 'Ratings exists' );
-		$this->assertAttributeInternalType( 'array', 'ratings', $plugin_info, 'Ratings should be an array' );
+		$this->assertIsArray( $plugin_info->ratings );
 		$this->assertEquals( array( 5, 4, 3, 2, 1 ), array_keys( $plugin_info->ratings ), 'Ratings should be ordered from 5 to 1' );
 		$this->assertArrayHasKey( '1', $plugin_info->ratings, 'Rating should have an attribute of 1' );
 		$this->assertArrayHasKey( '2', $plugin_info->ratings, 'Rating should have an attribute of 2' );
@@ -290,14 +290,14 @@ class Tests_Plugins_API extends TestCase {
 		$this->assertTrue( is_numeric( $plugin_info->num_ratings ), 'Num ratings are numeric' );
 
 		$this->assertObjectHasAttribute( 'active_installs', $plugin_info, 'Active Installs exists' );
-		$this->assertAttributeInternalType( 'integer', 'active_installs', $plugin_info, 'Active Installs should be an integer' );
+		$this->assertIsInt( $plugin_info->active_installs, 'Active Installs should be an integer' );
 		$this->assertObjectHasAttribute( 'downloaded', $plugin_info, 'Active Installs exists' );
-		$this->assertAttributeInternalType( 'integer', 'downloaded', $plugin_info, 'Downloaded should be an integer' );
+		$this->assertIsInt( $plugin_info->downloaded, 'Downloaded should be an integer' );
 
 		$this->assertObjectHasAttribute( 'last_updated', $plugin_info, 'Last Updated exists' );
-		$this->assertAttributeInternalType( 'string', 'last_updated', $plugin_info, 'Last Updated should be a string' );
+		$this->assertIsString( $plugin_info->last_updated );
 		$this->assertObjectHasAttribute( 'added', $plugin_info, 'Added exists' );
-		$this->assertAttributeInternalType( 'string', 'short_description', $plugin_info, 'Added should be a string' );
+		$this->assertIsString( $plugin_info->added );
 		if ( function_exists( 'date_create_from_format' ) ) {
 			$last_updated_date = DateTime::createFromFormat( 'Y-m-d g:ia \G\M\T', $plugin_info->last_updated );
 			$date_time_errors  = DateTime::getLastErrors();
@@ -309,37 +309,37 @@ class Tests_Plugins_API extends TestCase {
 		}
 
 		$this->assertObjectHasAttribute( 'homepage', $plugin_info, 'Homepage exists' );
-		$this->assertAttributeInternalType( 'string', 'homepage', $plugin_info, 'Homepage should be a string' );
+		$this->assertIsString( $plugin_info->homepage );
 		$this->assertObjectHasAttribute( 'sections', $plugin_info, 'Sections exists' );
-		$this->assertAttributeInternalType( 'array', 'sections', $plugin_info, 'Sections should be an array' );
+		$this->assertIsArray( $plugin_info->sections );
 
 		$this->assertObjectHasAttribute( 'description', $plugin_info, 'Description exists' );
-		$this->assertAttributeInternalType( 'string', 'description', $plugin_info, 'Description should be a string' );
+		$this->assertIsString( $plugin_info->description );
 		$this->assertObjectHasAttribute( 'short_description', $plugin_info, 'Short Description exists' );
-		$this->assertAttributeInternalType( 'string', 'short_description', $plugin_info, 'Short Description should be a string' );
+		$this->assertIsString( $plugin_info->short_description );
 
 		$this->assertObjectHasAttribute( 'download_link', $plugin_info, 'Download link exists' );
-		$this->assertAttributeInternalType( 'string', 'download_link', $plugin_info, 'Download link should be a string' );
+		$this->assertIsString( $plugin_info->download_link );
 		$this->assertFalse( empty( $plugin_info->download_link ), 'Download link should have a value' );
 
 		$this->assertObjectHasAttribute( 'tags', $plugin_info, 'Tags exists' );
-		$this->assertAttributeInternalType( 'array', 'tags', $plugin_info, 'Tags should be an array' );
+		$this->assertIsArray( $plugin_info->tags );
 
 		$this->assertObjectHasAttribute( 'stable_tag', $plugin_info, 'Stable tag exists' );
-		$this->assertAttributeInternalType( 'string', 'stable_tag', $plugin_info, 'Stable tag should be a string' );
+		$this->assertIsString( $plugin_info->stable_tag );
 		$this->assertFalse( empty( $plugin_info->stable_tag ), 'Stable tag should have a value' );
 
 		$this->assertObjectHasAttribute( 'versions', $plugin_info, 'Versions exists' );
-		$this->assertAttributeInternalType( 'array', 'versions', $plugin_info, 'Versions should be an array' );
+		$this->assertIsArray( $plugin_info->versions );
 
 		$this->assertObjectHasAttribute( 'donate_link', $plugin_info, 'Donate link exists' );
-		$this->assertAttributeInternalType( 'string', 'donate_link', $plugin_info, 'Donate link should be a string' );
+		$this->assertIsString( $plugin_info->donate_link );
 
 		$this->assertObjectHasAttribute( 'banners', $plugin_info, 'Banners exists' );
-		$this->assertAttributeInternalType( 'array', 'banners', $plugin_info, 'Banners should be an array' );
+		$this->assertIsArray( $plugin_info->banners );
 
 		$this->assertObjectHasAttribute( 'icons', $plugin_info, 'Icons exists' );
-		$this->assertAttributeInternalType( 'array', 'icons', $plugin_info, 'Icons should be an array' );
+		$this->assertIsArray( $plugin_info->icons );
 	}
 }
 
