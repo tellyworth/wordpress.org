@@ -1,10 +1,12 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 
 /**
  *
  * @group api
  */
-class Tests_API_Locale_Banner extends WP_UnitTestCase {
+class Tests_API_Locale_Banner extends TestCase {
 
 	/**
 	 * @dataProvider data_locale_banner
@@ -19,11 +21,12 @@ class Tests_API_Locale_Banner extends WP_UnitTestCase {
 			],
 		] );
 
+		$this->assertEquals( wp_remote_retrieve_response_code( $response ), 200 );
 		$data = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		$this->assertArrayHasKey( 'suggest_string', $data );
 		$this->assertArrayHasKey( 'translated', $data );
-		$this->assertInternalType( 'array', $data['translated'] );
+		$this->assertIsArray( $data['translated'] );
 
 		preg_match_all( '#[a-z-]+.wordpress.org#', $data['suggest_string'], $sites );
 

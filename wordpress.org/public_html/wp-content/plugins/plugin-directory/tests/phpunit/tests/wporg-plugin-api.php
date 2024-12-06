@@ -1,12 +1,15 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
+
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 /**
  *
  * @group plugins-api
  */
-class Tests_Plugins_API extends WP_UnitTestCase {
+class Tests_Plugins_API extends TestCase {
 
 	public $api_endpoint_1_0         = 'http://api.wordpress.org/plugins/info/1.0/';
 	public $api_endpoint_1_1         = 'http://api.wordpress.org/plugins/info/1.1/';
@@ -44,12 +47,12 @@ class Tests_Plugins_API extends WP_UnitTestCase {
 		'donate_link'       => true,
 	);
 
-	function setUp() {
+	function setUp() : void {
 		parent::setUp();
 		add_filter( 'http_headers_useragent', array( $this, 'filter_http_headers_useragent' ) );
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		remove_filter( 'http_headers_useragent', array( $this, 'filter_http_headers_useragent' ) );
 		parent::tearDown();
 	}

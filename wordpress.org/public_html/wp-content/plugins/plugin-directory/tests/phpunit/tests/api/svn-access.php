@@ -1,10 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
+
 /**
  *
  * @group api
  */
-class Tests_API_SVN_Access extends WP_UnitTestCase {
+class Tests_API_SVN_Access extends TestCase {
 
 	function test_permission_denied() {
 		$response = wp_remote_get( 'https://wordpress.org/plugins/wp-json/plugins/v1/svn-access' );

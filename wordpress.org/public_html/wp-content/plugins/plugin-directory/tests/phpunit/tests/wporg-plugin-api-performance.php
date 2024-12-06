@@ -1,5 +1,7 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 /**
@@ -7,7 +9,7 @@ require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
  * @group plugins-api
  * @group performance
  */
-class Tests_Plugins_API_Performance extends WP_UnitTestCase {
+class Tests_Plugins_API_Performance extends TestCase {
 
 	public $api_endpoint_1_0         = 'http://api.wordpress.org/plugins/info/1.0/';
 	public $api_endpoint_1_1         = 'http://api.wordpress.org/plugins/info/1.1/';
@@ -44,12 +46,12 @@ class Tests_Plugins_API_Performance extends WP_UnitTestCase {
 		'contributors'      => true,
 	);
 
-	function setUp() {
+	function setUp() : void {
 		parent::setUp();
 		add_filter( 'http_headers_useragent', array( $this, 'filter_http_headers_useragent' ) );
 	}
 
-	function tearDown() {
+	function tearDown() : void {
 		remove_filter( 'http_headers_useragent', array( $this, 'filter_http_headers_useragent' ) );
 		parent::tearDown();
 	}
@@ -64,7 +66,7 @@ class Tests_Plugins_API_Performance extends WP_UnitTestCase {
 
 	}
 
-	static function tearDownAfterClass() {
+	static function tearDownAfterClass() : void {
 		global $wporg_plugin_api_performance;
 
 		echo 'Performance summary for ' . get_called_class() . ":\n";
@@ -174,7 +176,7 @@ class Tests_Plugins_API_Performance extends WP_UnitTestCase {
 			$r[] = array(
 				'plugin_information',
 				array(
-					'slug'   => $plugin->slug,
+					'slug'   => $plugin['slug'],
 					'fields' => $this->fields,
 				),
 			);
@@ -207,7 +209,7 @@ class Tests_Plugins_API_Performance extends WP_UnitTestCase {
 		} else {
 			$this->assertObjectHasAttribute( 'info', $response, 'Info exists' );
 			$this->assertObjectHasAttribute( 'plugins', $response, 'Plugins exists' );
-			$this->assertAttributeInternalType( 'array', 'plugins', $response, 'Plugins should be an array' );
+			$this->assertIsArray( $response->plugins );
 			$this->greaterThanOrEqual( count( $response->plugins ), 1 );
 		}
 	}

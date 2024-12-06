@@ -18,4 +18,4 @@ function manually_load_plugin() {
 	require_once dirname( __FILE__ ) . '/../plugin-directory.php';
 }
 
-tests_add_filter( 'muplugins_loaded', __NAMESPACE__ . '\manually_load_plugin' );
+\add_filter( 'muplugins_loaded', __NAMESPACE__ . '\manually_load_plugin' );

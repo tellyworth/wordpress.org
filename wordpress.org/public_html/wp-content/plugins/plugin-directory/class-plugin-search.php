@@ -76,7 +76,7 @@ class Plugin_Search {
 			add_filter( 'posts_pre_query', array( $this, 'set_max_num_pages' ), 15, 2 ); // After `Classic_Search::filter__posts_pre_query()`
 
 			// Load Jetpack Search.
-			include_once WP_PLUGIN_DIR . '/jetpack/vendor/autoload_packages.php';
+			@include_once WP_PLUGIN_DIR . '/jetpack/vendor/autoload_packages.php';
 
 			if ( class_exists( '\Automattic\Jetpack\Search\Classic_Search' ) ) {
 				// New Jetpack
@@ -85,10 +85,12 @@ class Plugin_Search {
 			} else {
 				// Old(er) Jetpack, load the classic search module, Temporarily.
 
-				include_once WP_PLUGIN_DIR . '/jetpack/modules/search/class.jetpack-search.php';
-				include_once WP_PLUGIN_DIR . '/jetpack/modules/search/class.jetpack-search-helpers.php';
+				@include_once WP_PLUGIN_DIR . '/jetpack/modules/search/class.jetpack-search.php';
+				@include_once WP_PLUGIN_DIR . '/jetpack/modules/search/class.jetpack-search-helpers.php';
 
-				\Jetpack_Search::instance()->setup();
+				if ( class_exists( '\Jetpack_Search' ) ) {
+					\Jetpack_Search::instance()->setup();
+				}
 			}
 
 		}
