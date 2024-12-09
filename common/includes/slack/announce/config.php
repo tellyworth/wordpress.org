@@ -366,7 +366,9 @@ function get_whitelist() {
 		),
 		'hosting' => array(
 			'andrew.taylor', // @ataylorme on Slack
+			'chaion07',
 			'Crixu',
+			'grafruessel',
 			'kirasong',
 			'jadonn',
 			'JavierCasares',
@@ -374,6 +376,7 @@ function get_whitelist() {
 			'amykamala', // @amy kamala on Slack
 			'brechtryckaert',
 			'brettface',
+			'zunaid321', // @Zunaid Amin on Slack
 		),
 		'marketing' => array(
 			'bernard0omnisend', // Bernard Meyer on Slack
@@ -533,6 +536,7 @@ function get_whitelist() {
 			'colorful tones', // @colorful-tones on Slack
 			'courane01', // @Courtney on Slack
 			'courtneypk',
+			'devmuhib', // @Muhibul Haque on Slack
 			'digitalchild',
 			'eboxnet',
 			'fikekomala',
