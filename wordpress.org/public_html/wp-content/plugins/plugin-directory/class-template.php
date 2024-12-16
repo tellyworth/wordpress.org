@@ -815,6 +815,16 @@ class Template {
 	}
 
 	/**
+	 * Generate a playground link to run Plugin Check on a specific version of a plugin.
+	 */
+	public static function preview_link_plugin_check( $slug, $version ) {
+		$plugin_check = sprintf( 'https://wordpress.org/plugins/wp-json/plugins/v1/plugin/%s/blueprint.json?version=%s&pcp=1', esc_attr( $slug ), esc_attr( $version ) );
+		$plugin_check = add_query_arg( 'blueprint-url', urlencode($plugin_check), 'https://playground.wordpress.net/' );
+
+		return $plugin_check;
+	}
+
+	/**
 	 * Return a time-dependent variable for zip preview links.
 	 *
 	 * @param int $lifespan           The life span of the nonce, in seconds. Default is one week.
@@ -1117,7 +1127,7 @@ class Template {
 			$result['public'] = true;
 		}
 
-		return $result;	
+		return $result;
 	}
 
 	/**

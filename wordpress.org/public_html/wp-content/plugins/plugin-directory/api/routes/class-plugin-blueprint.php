@@ -38,9 +38,10 @@ class Plugin_Blueprint extends Base {
 
 		if ( $request->get_param('zip_hash') ) {
 			$this->reviewer_blueprint( $request, $plugin );
-		}
-		if ( $request->get_param('url_hash') ) {
+		} elseif ( $request->get_param('url_hash') ) {
 			$this->developer_blueprint( $request, $plugin );
+		} elseif ( $request->get_param('version') && $request->get_param('pcp') ) {
+			$this->plugin_check_blueprint( $request, $plugin );
 		}
 
 		$blueprints = get_post_meta( $plugin->ID, 'assets_blueprints', true );
@@ -59,7 +60,7 @@ class Plugin_Blueprint extends Base {
 			if ( isset( $blueprint_data->steps ) ) {
 				if ( !in_array( 'setSiteLanguage', wp_list_pluck( $blueprint_data->steps, 'step' ) ) ) {
 					// Add setSiteLanguage as the final step
-					array_push( $blueprint_data->steps, 
+					array_push( $blueprint_data->steps,
 						(object)[
 							'step' => 'setSiteLanguage',
 							'language' => sanitize_text_field( $request->get_param('lang') )
@@ -138,6 +139,24 @@ class Plugin_Blueprint extends Base {
 						die( $output );
 					}
 				}
+			}
+		}
+	}
+
+	function plugin_check_blueprint( $request, $plugin ) {
+		// Generate a PCP blueprint for a specific plugin version
+
+		$release_version = $request->get_param('version');
+		$download_link = Template::download_link( $plugin, $release_version );
+		$use_pcp = (bool)$request->get_param('pcp');
+
+		if ( $use_pcp && $download_link  ) {
+			// Plugin Check: generate a blueprint. We don't need the plugin's custom blueprint for this.
+			$output = $this->generate_blueprint( $request, $plugin, $download_link, $use_pcp, false );
+
+			if ( $output ) {
+				header( 'Access-Control-Allow-Origin: https://playground.wordpress.net' );
+				die( $output );
 			}
 		}
 	}
