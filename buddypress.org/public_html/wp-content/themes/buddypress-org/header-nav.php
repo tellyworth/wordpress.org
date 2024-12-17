@@ -1,11 +1,11 @@
 <?php
 
 // "current" CSS class vars
-$_is_about    = false;
-$_is_bbpress  = false;
-$_is_codex    = true;
-$_is_news     = false;
-$_is_download = false;
+$_is_about    = is_page( 'about' );
+$_is_bbpress  = ( ( function_exists( 'is_bbpress' ) && is_bbpress() ) && ! is_front_page() );
+$_is_codex    = false;
+$_is_news     = ( is_home() || is_singular( 'post' ) || ( is_archive() && ! is_post_type_archive() ) );
+$_is_download = is_page( 'download' );
 
 ?>
 <div id="nav">
