@@ -1,0 +1,27 @@
+{
+	"name": "wporg/plugin-directory",
+	"description": "WordPress.org plugin directory",
+	"homepage": "https://wordpress.org/plugins",
+	"license": "GPL-2.0-or-later",
+	"config": {
+		"platform": {
+			"php": "7.4"
+		},
+		"_comment": "Work around `test:watch` timeout, see https://github.com/spatie/phpunit-watcher/issues/63#issuecomment-545633709",
+		"process-timeout": 0
+	},
+	"require": {
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^8"
+	},
+	"scripts": {
+		"test": [
+			"phpunit tests"
+		]
+	},
+	"autoload": {
+		"classmap": [
+		]
+	}
+}

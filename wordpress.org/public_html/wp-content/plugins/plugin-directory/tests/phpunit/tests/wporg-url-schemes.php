@@ -1,6 +1,9 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class TestUrlSchemes extends WP_UnitTestCase {
+
+
+class TestUrlSchemes extends TestCase {
 
 	function http_get( $uri ) {
 		$base_url = 'https://wordpress.org';

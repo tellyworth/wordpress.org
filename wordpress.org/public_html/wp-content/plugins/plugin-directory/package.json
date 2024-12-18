@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+	  "@wp-now/wp-now": "^0.1.70"
+	},
+	"scripts": {
+	  "wp-now": "wp-now start --php=8.1",
+	  "cli": "wp-now cli",
+	  "test": "wp-now php --php=8.1 -- ./vendor/bin/phpunit --stderr",
+	  "testverbose": "wp-now php --php=8.1 -- ./vendor/bin/phpunit --stderr --verbose --testdox"
+	}
+}
