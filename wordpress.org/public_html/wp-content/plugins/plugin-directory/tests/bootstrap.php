@@ -13,6 +13,9 @@ define( 'WP_TESTS_TITLE', 'WordPress Plugin Directory Unit Tests' );
 define( 'WP_PHP_BINARY', 'php' );
 putenv( 'WP_TESTS_SKIP_INSTALL=1' );
 
+// Required by plugin-directory
+define( 'PLUGINS_TABLE_PREFIX', 'wporg_unit_tests_' );
+
 // load WordPress if we're running within wp-now.
 if ( false !== strpos( $_SERVER['_'], '@wp-now/wp-now' ) ) {
 	require_once '/var/www/html/wp-load.php';
