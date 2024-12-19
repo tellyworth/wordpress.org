@@ -5,7 +5,7 @@
 	"scripts": {
 	  "wp-now": "wp-now start --php=8.1",
 	  "cli": "wp-now cli",
-	  "test": "wp-now php --php=8.1 -- ./vendor/bin/phpunit --stderr",
-	  "testverbose": "wp-now php --php=8.1 -- ./vendor/bin/phpunit --stderr --verbose --testdox"
+	  "test": "WP_TESTS_SKIP_INSTALL=1 wp-now php --php=8.1 -- ./vendor/bin/phpunit --stderr",
+	  "testverbose": "WP_TESTS_SKIP_INSTALL=1 wp-now php --php=8.1 -- ./vendor/bin/phpunit --stderr --verbose --testdox"
 	}
 }
