@@ -32,3 +32,19 @@ function manually_load_plugin() {
 }
 
 \add_filter( 'muplugins_loaded', __NAMESPACE__ . '\manually_load_plugin' );
+
+
+// Set up some custom tables needed for tests
+// FIXME: Find a better place for this.
+global $wpdb;
+if ( !$wpdb->get_row( "SHOW TABLES LIKE '" . PLUGINS_TABLE_PREFIX . "svn_access'" ) ) {
+	$wpdb->query( "CREATE TABLE IF NOT EXISTS " . PLUGINS_TABLE_PREFIX . "svn_access (
+		`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+		`path` varchar(100) NOT NULL,
+		`user` varchar(100) NOT NULL,
+		`access` varchar(10) NOT NULL,
+		PRIMARY KEY (`id`),
+		KEY `path` (`path`),
+		KEY `user` (`user`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" );
+}
