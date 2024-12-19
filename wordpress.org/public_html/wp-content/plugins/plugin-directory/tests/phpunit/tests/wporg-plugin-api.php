@@ -9,7 +9,7 @@ require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
  *
  * @group plugins-api
  */
-class Tests_Plugins_API extends TestCase {
+class Tests_Plugins_API extends WP_UnitTestCase {
 
 	public $api_endpoint_1_0         = 'http://api.wordpress.org/plugins/info/1.0/';
 	public $api_endpoint_1_1         = 'http://api.wordpress.org/plugins/info/1.1/';

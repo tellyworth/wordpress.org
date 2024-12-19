@@ -3,7 +3,7 @@ use PHPUnit\Framework\TestCase;
 
 
 
-class TestUrlSchemes extends TestCase {
+class TestUrlSchemes extends WP_UnitTestCase {
 
 	function http_get( $uri ) {
 		$base_url = 'https://wordpress.org';

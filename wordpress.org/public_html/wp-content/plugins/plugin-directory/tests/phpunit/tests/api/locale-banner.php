@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @group api
  */
-class Tests_API_Locale_Banner extends TestCase {
+class Tests_API_Locale_Banner extends WP_UnitTestCase {
 
 	/**
 	 * @dataProvider data_locale_banner
