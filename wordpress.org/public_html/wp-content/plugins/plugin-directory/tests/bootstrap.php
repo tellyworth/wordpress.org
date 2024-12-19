@@ -6,12 +6,12 @@ if ( 'cli' !== php_sapi_name() ) {
 	return;
 }
 
-// WP_TESTS_DOMAIN, WP_TESTS_EMAIL, WP_TESTS_TITLE, WP_PHP_BINARY
-
+// Required by wp-phpunit.
 define( 'WP_TESTS_DOMAIN', 'localhost:8881' ); // FIXME: can we fetch this dynamically?
 define( 'WP_TESTS_EMAIL', '' );
 define( 'WP_TESTS_TITLE', 'WordPress Plugin Directory Unit Tests' );
 define( 'WP_PHP_BINARY', 'php' );
+putenv( 'WP_TESTS_SKIP_INSTALL=1' );
 
 // load WordPress if we're running within wp-now.
 if ( false !== strpos( $_SERVER['_'], '@wp-now/wp-now' ) ) {
