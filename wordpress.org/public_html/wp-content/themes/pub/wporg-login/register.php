@@ -73,7 +73,7 @@ get_header();
 ?>
 
 <?php if ( defined( 'WPORG_ON_HOLIDAY' ) && WPORG_ON_HOLIDAY ) : ?>
-		<p><?php printf( __( 'New user registration is currently unavailable. <a href="%s">Please check back after the holiday break.</a>', 'wporg' ), 'https://wordpress.org/news/2024/12/holiday-break/' ); ?></p>
+		<p><?php printf( __( 'New user registration is currently unavailable. Please check back after the <a href="%s">holiday break</a>.', 'wporg' ), 'https://wordpress.org/news/2024/12/holiday-break/' ); ?></p>
 <?php else: ?>
 
 <p class="intro"><?php _e( 'Create a WordPress.org account to start contributing to WordPress, get help in the support forums, or rate and review themes and plugins.', 'wporg' ); ?></p>
